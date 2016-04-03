@@ -1,0 +1,107 @@
+﻿@model RegisterViewModel
+
+<div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="header-wrapper">
+                <h1 class="header">Register for a rabbit</h1>
+                <a href="#">Care facility registration</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7 col-md-offset-1">
+            <section>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fringilla ipsum et nisl sollicitudin, at molestie odio tempus. Donec molestie aliquet velit ac pulvinar. Ut congue metus a nulla pulvinar, ac facilisis enim pretium. Maecenas finibus fermentum sollicitudin.</p>
+                <p>Pellentesque sollicitudin nulla diam, in rutrum metus convallis eget. Sed ultrices, magna vel efficitur scelerisque, risus dui congue enim, vel posuere tellus nisl aliquet purus.</p>
+
+                <form method="post" class="form-horizontal clearfix" role="form" asp-controller="Account" asp-action="Register">
+                    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4>Please fill in the form to create new account</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <div>
+                                <label asp-for="FirstName" class="control-label"></label>
+                                <div>
+                                    <input asp-for="FirstName" class="form-control" />
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div>
+                                <label asp-for="LastName" class="control-label"></label>
+                                <div>
+                                    <input asp-for="LastName" class="form-control" />
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div>
+                                <label asp-for="Email" class="control-label"></label><required-asterick />
+                                <div>
+                                    <input asp-for="Email" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div>
+                                <label asp-for="Password" class="control-label"></label><required-asterick />
+                                <div>
+                                    <input asp-for="Password" class="form-control" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div>
+                                <label asp-for="CareFacility" class="control-label"></label><required-asterick />
+                                <div>
+                                    <input asp-for="CareFacility" class="form-control" />
+                                    <span asp-validation-for="CareFacility" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="row form-buttons-row">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-success">Register</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <img src="~/assets/images/rabbit_1.jpg" />
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style type="text/css">
+        .header-wrapper {
+            margin-bottom: 40px;
+        }
+
+        .header-wrapper > h1 {
+            margin-bottom: 0px;
+        }
+
+        .header-wrapper > a {
+            font-size: 10px;
+            margin-left: 3px;
+        }
+
+        .form-buttons-row {
+            margin-top: 15px;
+        }
+    </style>
+}

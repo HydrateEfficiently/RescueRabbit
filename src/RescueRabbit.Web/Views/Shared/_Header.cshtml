@@ -1,0 +1,36 @@
+﻿@inject IIdentityResolver IdentityResolver
+
+@{
+    var identity = IdentityResolver.Resolve();
+}
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Rescue Rabbit</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @if (IdentityResolver.IsSignedIn())
+                {
+                <li><a>Hi, @identity.GetFirstName()</a></li>
+                <li>
+                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                    <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm"></form>
+                </li>
+                }
+                else
+                {
+                <li><a asp-action="Login" asp-controller="Account">Login</a></li>
+                <li><a asp-action="Index" asp-controller="Registration">Register</a></li>
+                }
+                
+            </ul>
+        </div>
+    </div>
+</nav>

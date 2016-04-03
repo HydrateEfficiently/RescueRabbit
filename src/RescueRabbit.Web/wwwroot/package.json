@@ -1,0 +1,29 @@
+{
+  "jspm": {
+    "name": "app",
+    "dependencies": {
+      "angular": "npm:angular@^1.5.3",
+      "angular-simple-logger": "github:nmccready/angular-simple-logger@^0.1.7",
+      "css": "github:systemjs/plugin-css@^0.1.20",
+      "leaflet": "github:Leaflet/Leaflet@^0.7.7",
+      "plugin-css": "github:systemjs/plugin-css@^0.1.20",
+      "ui-leaflet": "github:angular-ui/ui-leaflet@^1.0.0"
+    },
+    "devDependencies": {
+      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.8"
+    },
+    "overrides": {
+      "npm:angular@1.5.3": {
+        "format": "global",
+        "jspmNodeConversion": false,
+        "main": "angular",
+        "meta": {
+          "angular.js": {
+            "exports": "angular",
+            "format": "global"
+          }
+        }
+      }
+    }
+  }
+}
