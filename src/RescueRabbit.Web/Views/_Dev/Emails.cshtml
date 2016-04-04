@@ -6,16 +6,23 @@
     var emailLines = Model.Reverse();
 }
 
-<table>
-    <tbody>
-        @foreach (string line in emailLines)
-        {
-            var lineSplit = line.Split(',');
-            <tr>
-                <td>@Html.Raw(lineSplit[0])</td>
-                <td>@Html.Raw(lineSplit[1])</td>
-                <td>@Html.Raw(lineSplit[2])</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<html>
+<head>
+    <meta http-equiv="refresh" content="5" />
+</head>
+<body>
+    <table>
+        <tbody>
+            @foreach (string line in emailLines)
+            {
+                var lineSplit = line.Split(',');
+                <tr>
+                    <td>@Html.Raw(lineSplit[0])</td>
+                    <td>@Html.Raw(lineSplit[1])</td>
+                    <td>@Html.Raw(lineSplit[2])</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

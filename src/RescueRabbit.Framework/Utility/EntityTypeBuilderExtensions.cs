@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RescueRabbit.Services
+namespace RescueRabbit.Framework.Utility
 {
     public static class EntityTypeBuilderExtensions
     {

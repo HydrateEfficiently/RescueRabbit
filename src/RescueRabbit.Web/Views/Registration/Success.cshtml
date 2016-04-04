@@ -1,6 +1,7 @@
 ﻿<div class="text-center">
     <h1>Nice one!</h1>
     <h3>You registered successfully, we just need to confirm your email.</h3>
-    <p>It may take a few minutes, if you don't recieve an email, <a href="#">click here to resend</a>.</p>
+    <p>It may take a few minutes, if you don't recieve an email, <a href="javascript:document.getElementById('resendConfirmation').submit()">click here to resend</a>.</p>
     <img style="margin-top: 50px;" src="~/assets/images/rabbit_1.jpg" />
 </div>
+<form asp-controller="Registration" asp-action="ResendConfirmation" method="post" id="resendConfirmation"></form>

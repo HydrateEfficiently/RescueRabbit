@@ -69,6 +69,9 @@ namespace RescueRabbit.Web
             services.AddTransient<IIdentityResolver, IdentityResolver>();
             services.AddTransient<IEmailService, DevCsvEmailService>();
             services.AddTransient<IUrlResolver, UrlResolver>();
+
+            // Local Services
+            services.AddTransient<ServerDataBuilder>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

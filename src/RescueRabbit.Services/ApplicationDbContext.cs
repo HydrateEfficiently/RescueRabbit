@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using RescueRabbit.Framework.Models.Identity;
 using Microsoft.Data.Entity;
 using RescueRabbit.Framework.Models.Support;
+using RescueRabbit.Framework.Utility;
 
 namespace RescueRabbit.Services
 {

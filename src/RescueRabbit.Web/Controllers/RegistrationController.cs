@@ -40,8 +40,8 @@ namespace RescueRabbit.Web.Controllers
             {
                 try
                 {
-                    await _registrationService.RegisterAsync(model.ToRegistrationRequest());
-                    return RedirectToAction(nameof(Success));
+                    var user = await _registrationService.RegisterAsync(model.ToRegistrationRequest());
+                    return RedirectToAction(nameof(Success), new { userId = user.Id });
                 }
                 catch (IdentityErrorException ex)
                 {
@@ -52,9 +52,17 @@ namespace RescueRabbit.Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [Route("resend-confirmation/{userId}")]
+        public async Task<IActionResult> ResendConfirmation(string userId)
+        {
+            await _registrationService.SendConfirmationEmail(userId);
+            return RedirectToAction(nameof(Success), new { userId = userId });
+        }
+
         [HttpGet]
-        [Route("success")]
-        public IActionResult Success()
+        [Route("success/{userId}")]
+        public IActionResult Success(string userId)
         {
             return View();
         }

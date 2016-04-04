@@ -10,14 +10,15 @@ namespace RescueRabbit.Services.Identity
 {
     public interface IRegistrationService
     {
-        Task RegisterAsync(RegistrationRequest request);
+        Task<ApplicationUser> RegisterAsync(RegistrationRequest request);
+
+        Task SendConfirmationEmail(string userId);
 
         Task ConfirmEmailAsync(string userId, string code);
     }
 
     public class RegistrationService : IRegistrationService
     {
-
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUrlResolver _urlResolver;
         private readonly IEmailService _emailService;
@@ -32,7 +33,7 @@ namespace RescueRabbit.Services.Identity
             _emailService = emailService;
         }
 
-        public async Task RegisterAsync(RegistrationRequest request)
+        public async Task<ApplicationUser> RegisterAsync(RegistrationRequest request)
         {
             var user = request.ToApplicationUser();
 
@@ -44,12 +45,15 @@ namespace RescueRabbit.Services.Identity
                     .ToArray());
             }
 
-            var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            string emailConfirmationUrl = _urlResolver.ResolveConfirmationEmailUrl(user.Id, emailConfirmationToken);
-            await _emailService.SendEmailAsync(
-                user.Email,
-                "Confirm your account with Rescue Rabbit",
-                $"Please confirm your account by clicking this link: <a href='{emailConfirmationUrl}'>link</a>");
+            await SendConfirmationEmail(user);
+
+            return user;
+        }
+
+        public async Task SendConfirmationEmail(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            await SendConfirmationEmail(user);
         }
 
         public async Task ConfirmEmailAsync(string userId, string code)
@@ -71,5 +75,19 @@ namespace RescueRabbit.Services.Identity
                 throw new EmailConfirmationFailedException();
             }
         }
+
+        #region Helpers
+
+        private async Task SendConfirmationEmail(ApplicationUser user)
+        {
+            var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            string emailConfirmationUrl = _urlResolver.ResolveConfirmationEmailUrl(user.Id, emailConfirmationToken);
+            await _emailService.SendEmailAsync(
+                user.Email,
+                "Confirm your account with Rescue Rabbit",
+                $"Please confirm your account by clicking this link: <a href='{emailConfirmationUrl}'>link</a>");
+        }
+
+        #endregion
     }
 }
