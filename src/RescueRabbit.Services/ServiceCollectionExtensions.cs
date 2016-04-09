@@ -39,6 +39,7 @@ namespace RescueRabbit.Services
             services.AddScoped<SignInManager<ApplicationUser>, ApplicationSignInManager>();
             services.AddTransient<IRegistrationService, RegistrationService>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<ICurrentUserProvider, CurrentUserProvider>();
 
             // Support
             services.AddTransient<ISupportService, SupportService>();

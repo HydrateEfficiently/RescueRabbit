@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Azn.RiskApp.Web.Services._Dev
+namespace Azn.RiskApp.Web.Services.Framework._Dev
 {
     public class DevCsvEmailService : IEmailService
     {
