@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Entity;
 using RescueRabbit.Initializer.Initializers.Identity;
+using RescueRabbit.Initializer.Initializers.Support;
 using RescueRabbit.Services;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,18 @@ namespace RescueRabbit.Initializer.Initializers
 
         private readonly ApplicationDbContext _dbContext;
         private readonly SystemUserInitializer _systemUserInitializer;
+        private readonly SupportOutletInitializer _supportOutletInitializer;
         private readonly IEnvironmentInitializer _environmentInitializer;
 
         public MainDataInitializer(
             ApplicationDbContext dbContext,
             SystemUserInitializer systemUserInitializer,
+            SupportOutletInitializer supportOutletInitializer,
             IEnvironmentInitializer environmentInitializer)
         {
             _dbContext = dbContext;
             _systemUserInitializer = systemUserInitializer;
+            _supportOutletInitializer = supportOutletInitializer;
             _environmentInitializer = environmentInitializer;
         }
 
@@ -31,6 +35,9 @@ namespace RescueRabbit.Initializer.Initializers
 
             // Identity
             _systemUserInitializer.Run();
+
+            // Support
+            _supportOutletInitializer.Run();
 
             _environmentInitializer.Run();
         }

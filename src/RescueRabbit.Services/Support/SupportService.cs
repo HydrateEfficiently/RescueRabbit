@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RescueRabbit.Services.Support
 {
-    public interface ISupportOutletService
+    public interface ISupportService
     {
         Task<SupportOutlet> CreateAsync(CreateSupportOutletRequest request);
 
@@ -20,12 +20,12 @@ namespace RescueRabbit.Services.Support
         Task<SupportOutlet> UpdateAsync(UpdateSupportOutletRequest updateReq);
     }
 
-    public class SupportOutletService : ISupportOutletService
+    public class SupportService : ISupportService
     {
         private readonly IIdentityResolver _identityResolver;
         private readonly ApplicationDbContext _dbContext;
 
-        public SupportOutletService(
+        public SupportService(
             IIdentityResolver identityResolver,
             ApplicationDbContext dbContext)
         {
@@ -51,9 +51,9 @@ namespace RescueRabbit.Services.Support
             return await _dbContext.SupportOutlets.FirstOrDefaultAsync(so => so.Id == id);
         }
 
-        public Task<IEnumerable<SupportOutlet>> ListAsync()
+        public async Task<IEnumerable<SupportOutlet>> ListAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.SupportOutlets.ToListAsync();
         }
 
         // TODO: Authorize

@@ -14,6 +14,7 @@ using RescueRabbit.Framework.Services;
 using RescueRabbit.Initializer.Initializers;
 using RescueRabbit.Initializer.Initializers.Identity;
 using RescueRabbit.Initializer.Services.DataImportServices;
+using RescueRabbit.Initializer.Initializers.Support;
 
 namespace RescueRabbit.Initializer
 {
@@ -50,11 +51,13 @@ namespace RescueRabbit.Initializer
 
             // Components
             services.AddTransient<SystemUserInitializer>();
+            services.AddTransient<SupportOutletInitializer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, MainDataInitializer dataInitializer)
+        public void Configure(IServiceProvider serviceProvider)
         {
+            var dataInitializer = serviceProvider.GetRequiredService<MainDataInitializer>();
             dataInitializer.Run();
             Environment.Exit(0);
         }

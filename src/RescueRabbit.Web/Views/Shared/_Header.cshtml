@@ -7,13 +7,13 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Rescue Rabbit</a>
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Rescue Rabbit</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a asp-controller="Support" asp-action="ServiceDirectory">Services</a></li>
+                <li><a asp-controller="Support" asp-action="Directory">Find support</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (IdentityResolver.IsSignedIn())

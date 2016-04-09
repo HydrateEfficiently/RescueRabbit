@@ -1,9 +1,12 @@
 import { paths } from './../paths';
 
+function camelCaseToDashed(str) {
+    return str.replace(/(?:^|\.?)([A-Z])/g, (x, y) => `-${y.toLowerCase()}`).replace(/^_/, "");
+}
+
 export function componentFactory(name, controller, deps = [], directiveOptions = {}) {
-    let dashedName = name
-        .replace(/(?:^|\.?)([A-Z])/g, (x, y) => `-${y.toLowerCase()}`)
-        .replace(/^_/, "");
+    let prefixedName = `rr${name.charAt(0).toUpperCase()}${name.substring(1)}`; 
+    let dashedName = camelCaseToDashed(name);
     let moduleName = `rr.components.${dashedName}`;
     let templateUrl = `/${paths.components}${dashedName}/${dashedName}.html`;
 
@@ -20,7 +23,7 @@ export function componentFactory(name, controller, deps = [], directiveOptions =
     };
     angular.merge(options, componentOptions);
 
-    angular.module(moduleName, deps).directive(name, () => options);
+    angular.module(moduleName, deps).directive(prefixedName, () => options);
 
     return moduleName;
 }

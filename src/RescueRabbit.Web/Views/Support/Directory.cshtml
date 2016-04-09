@@ -1,0 +1,12 @@
+﻿<div ng-controller="SupportDirectoryController as ctrl">
+    <rr-support-directory-map></rr-support-directory-map>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_AppScriptsPartial")
+    <script type="text/javascript">
+        System.import("/src/apps/support-directory/support-directory.js").then(function (m) {
+            m.run({});
+        });
+    </script>
+}

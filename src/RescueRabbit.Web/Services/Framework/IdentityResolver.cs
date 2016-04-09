@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace RescueRabbit.Web.Services
+namespace RescueRabbit.Web.Services.Framework
 {
     public class IdentityResolver : IIdentityResolver
     {

@@ -1,6 +1,6 @@
 import { Injectable } from './../../utility/injectable';
 
-class ServiceDirectoryMapController extends Injectable {
+class SupportDirectoryMapController extends Injectable {
     static get $inject() {
         return ['RRGeolocationProvider'];
     }
@@ -34,7 +34,8 @@ class ServiceDirectoryMapController extends Injectable {
         };
 
         this.RRGeolocationProvider.get().then(location => {
-            self.map.center.lat = location.coords.lat;
+            self.map.center.lat = location.coords.latitude;
+            self.map.center.lng = location.coords.longitude;
         });
     }
 }
@@ -48,7 +49,7 @@ import 'ui-leaflet';
 
 import { commonServices } from './../../common/common-services';
 
-export let serviceDirectoryMap = componentFactory(
-    'serviceDirectoryMap',
-    ServiceDirectoryMapController,
+export let supportDirectoryMap = componentFactory(
+    'supportDirectoryMap',
+    SupportDirectoryMapController,
     ['nemLogging', 'ui-leaflet', commonServices]);

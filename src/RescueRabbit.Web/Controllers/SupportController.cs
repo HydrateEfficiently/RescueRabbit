@@ -18,8 +18,8 @@ namespace RescueRabbit.Web.Controllers
         }
 
         [HttpGet]
-        [Route("service-directory")]
-        public IActionResult ServiceDirectory()
+        [Route("directory")]
+        public IActionResult Directory()
         {
             return View();
         }

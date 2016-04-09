@@ -20,30 +20,38 @@ class GeolocationProvider extends Injectable {
         let deferred = this.$q.defer();
         let navigator = this.$window.navigator;
 
-        if (navigator && navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                position => {
-                    deferred.resolve(position);
-                },
-                error => {
-                    let errorMessage = 'Unknown error determining location';
-                    switch (error.code) {
-                        case 1:
-                            errorMessage = GeolocationErrorMessages.PermissionDenied;
-                            break;
-                        case 2:
-                            errorMessage = GeolocationErrorMessages.PositionUnavailable;
-                            break;
-                        case 3:
-                            errorMessage = GeolocationErrorMessages.Timeout;
-                            break;
-                    }
-                    deferred.reject(errorMessage);
-                },
-                options);
-        } else {
-            deferred.reject(GeolocationErrorMessages.UnsupportedBrowser);
-        }
+        // if (navigator && navigator.geolocation) {
+        //     navigator.geolocation.getCurrentPosition(
+        //         position => {
+        //             deferred.resolve(position);
+        //         },
+        //         error => {
+        //             let errorMessage = 'Unknown error determining location';
+        //             switch (error.code) {
+        //                 case 1:
+        //                     errorMessage = GeolocationErrorMessages.PermissionDenied;
+        //                     break;
+        //                 case 2:
+        //                     errorMessage = GeolocationErrorMessages.PositionUnavailable;
+        //                     break;
+        //                 case 3:
+        //                     errorMessage = GeolocationErrorMessages.Timeout;
+        //                     break;
+        //             }
+        //             deferred.reject(errorMessage);
+        //         },
+        //         options);
+        // } else {
+        //     deferred.reject(GeolocationErrorMessages.UnsupportedBrowser);
+        // }
+        
+        deferred.resolve({
+            coords: {
+                latitude: -43.527740,
+                longitude: 172.632005
+            }
+        });
+
         return deferred.promise;
     }
 }

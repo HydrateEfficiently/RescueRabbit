@@ -12,11 +12,11 @@ namespace RescueRabbit.Initializer.Initializers.Support
 {
     public class SupportOutletInitializer : IDataInitializer
     {
-        private readonly ISupportOutletService _supportOutletService;
+        private readonly ISupportService _supportOutletService;
         private readonly JsonDataImportService _jsonDataImportService;
 
         public SupportOutletInitializer(
-            ISupportOutletService supportOutletService,
+            ISupportService supportOutletService,
             JsonDataImportService jsonDataImportService)
         {
             _supportOutletService = supportOutletService;

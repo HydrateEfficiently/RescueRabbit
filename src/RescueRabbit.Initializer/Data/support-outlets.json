@@ -1,8 +1,11 @@
 ﻿[
   {
     "Id": "6fbefbcd-6087-47f9-b372-810089c31331",
+    "Name": "CareNZ",
     "Address": "Unit 3, 105 Gasson Street, Christchurch",
     "PhoneNumber": "0800 365 870",
-    "Website": "www.carenz.co.nz"
+    "Website": "www.carenz.co.nz",
+    "Latitude": -43.5408962,
+    "Longitude": 172.6401967
   }
 ]

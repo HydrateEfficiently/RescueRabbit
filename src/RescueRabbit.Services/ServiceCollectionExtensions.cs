@@ -4,6 +4,7 @@ using Microsoft.Data.Entity;
 using Microsoft.Extensions.DependencyInjection;
 using RescueRabbit.Framework.Models.Identity;
 using RescueRabbit.Services.Identity;
+using RescueRabbit.Services.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,9 @@ namespace RescueRabbit.Services
             services.AddScoped<SignInManager<ApplicationUser>, ApplicationSignInManager>();
             services.AddTransient<IRegistrationService, RegistrationService>();
             services.AddTransient<IAccountService, AccountService>();
+
+            // Support
+            services.AddTransient<ISupportService, SupportService>();
         }
     }
 }

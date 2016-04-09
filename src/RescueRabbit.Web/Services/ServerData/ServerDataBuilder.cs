@@ -1,16 +1,18 @@
-﻿using RescueRabbit.Services.Identity;
+﻿using Microsoft.AspNet.Mvc;
+using RescueRabbit.Services.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RescueRabbit.Web.Services
+namespace RescueRabbit.Web.Services.ServerData
 {
     public class ServerDataBuilder
     {
         private readonly ICurrentUserProvider _currentUserProvider;
 
         private bool _includeCurrentUser;
+        private Controller[] _includedControllers = new Controller[] { };
 
         public ServerDataBuilder(
             ICurrentUserProvider currentUserProvider)
@@ -21,6 +23,12 @@ namespace RescueRabbit.Web.Services
         public ServerDataBuilder AddCurrentUser()
         {
             _includeCurrentUser = true;
+            return this;
+        }
+
+        public ServerDataBuilder AddControllerActions(params Controller[] controllers)
+        {
+            _includedControllers = controllers;
             return this;
         }
 
