@@ -2,7 +2,7 @@ import { Injectable } from './../../utility/injectable';
 
 export class CreateMotivationController extends Injectable {
     static get $inject() {
-        return ['$window', 'RRLoggingService', 'RRHttpService', 'RRUrlService', 'RRApiInterfaceFactory'];
+        return ['$window', 'RRLoggingService', 'RRUrlService', 'RRApiInterfaceFactory'];
     }
 
     constructor(...deps) {
@@ -14,13 +14,7 @@ export class CreateMotivationController extends Injectable {
     }
 
     saveMotivation() {
-        // let { $window, RRUrlService, RRHttpService } = this;
-        // let url = RRUrlService.getUrl('api.motivation.create');
-        // let motivationsUrl = RRUrlService.getUrl('motivation.index');
-        // this.RRHttpService.post(url, this.motivation)
-        //     .then(() => $window.location.href = motivationsUrl);
-
-        this.motivationApi.create(null, this.motivation)
+        this.motivationApi.create(this.motivation)
             .then(this.navigateToMotivations.bind(this));
     }
 

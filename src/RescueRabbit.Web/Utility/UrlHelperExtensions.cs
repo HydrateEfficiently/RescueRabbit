@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Routing;
+using RescueRabbit.Framework.Utility;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -71,16 +72,20 @@ namespace RescueRabbit.Web.Utility
 
             foreach (var actionType in publicActions)
             {
+                var parameterNames = actionType
+                    .GetParameters()
+                    .Where(pi => !pi.IsDefined(typeof(FromBodyAttribute), false))
+                    .Select(pi => pi.Name);
                 var routeValues = new RouteValueDictionary();
-                foreach (var parameter in actionType.GetParameters().Where(pi => !pi.IsDefined(typeof(FromBodyAttribute), false)))
-                {
-                    routeValues.Add(parameter.Name, $":{parameter.Name}");
-                }
+                parameterNames.ForEach(p => routeValues.Add(p, $":{p}"));
 
                 string actionName = actionType.Name;
                 dynamic action = new ExpandoObject();
+
                 action.UrlPattern = urlHelper.Action(actionName, controllerName, routeValues);
                 action.Method = actionType.IsDefined(typeof(HttpGetAttribute)) ? "get" : "post";
+                action.ParameterNames = parameterNames;
+
                 result.Add(actionName, action);
             }
 
