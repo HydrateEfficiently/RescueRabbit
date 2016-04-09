@@ -1,9 +1,11 @@
-import { CreateMotivationController } from './create-motivation-controller';
+import { commonServices } from './../../common/common-services';
 
 let app = angular.module('rr.create-motivation.app', [
-    supportDirectoryMap
-])
-.controller('CreateMotivationController', CreateMotivationController);
+    commonServices
+]);
+
+import { CreateMotivationController } from './create-motivation-controller';
+app.controller('CreateMotivationController', CreateMotivationController);
 
 import { appRunnerFactory } from './../../utility/app-runner-factory';
 let run = appRunnerFactory(app);

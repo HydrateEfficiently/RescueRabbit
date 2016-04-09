@@ -12,9 +12,9 @@ namespace RescueRabbit.Services.Motivation
 {
     public interface IMotivationService
     {
-        Task<IEnumerable<MotivationPiece>> ListAsync(string userId);
+        Task<IEnumerable<ReadMotivationPiece>> ListAsync(string userId);
 
-        Task<MotivationPiece> CreateAsync(CreateMotivationPiece request);
+        Task<ReadMotivationPiece> CreateAsync(CreateMotivationPiece request);
     }
 
     public class MotivationService : IMotivationService
@@ -30,16 +30,16 @@ namespace RescueRabbit.Services.Motivation
             _identityResolver = identityResolver;
         }
 
-        public async Task<IEnumerable<MotivationPiece>> ListAsync(string userId)
+        public async Task<IEnumerable<ReadMotivationPiece>> ListAsync(string userId)
         {
             var board = await _dbContext.MotivationBoards.GetAsync(userId);
-            return await _dbContext.MotivationPieces
+            return (await _dbContext.MotivationPieces
                 .Where(p => p.MotivationBoardId == board.Id)
                 .OrderBy(p => p.Order)
-                .ToListAsync();
+                .ToListAsync()).Select(p => new ReadMotivationPiece(p));
         }
 
-        public async Task<MotivationPiece> CreateAsync(CreateMotivationPiece request)
+        public async Task<ReadMotivationPiece> CreateAsync(CreateMotivationPiece request)
         {
             var identityId = _identityResolver.GetId();
             var board = await _dbContext.MotivationBoards.GetAsync(identityId);
@@ -49,7 +49,7 @@ namespace RescueRabbit.Services.Motivation
             piece.Order = await _dbContext.MotivationPieces.CountAsync(board.Id);
             _dbContext.MotivationPieces.Add(piece);
 
-            return piece;
+            return new ReadMotivationPiece(piece);
         }
     }
 

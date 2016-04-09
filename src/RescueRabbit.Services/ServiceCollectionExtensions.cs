@@ -4,6 +4,7 @@ using Microsoft.Data.Entity;
 using Microsoft.Extensions.DependencyInjection;
 using RescueRabbit.Framework.Models.Identity;
 using RescueRabbit.Services.Identity;
+using RescueRabbit.Services.Motivation;
 using RescueRabbit.Services.Support;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,9 @@ namespace RescueRabbit.Services
 
             // Support
             services.AddTransient<ISupportService, SupportService>();
+
+            // Motivation
+            services.AddTransient<IMotivationService, MotivationService>();
         }
     }
 }

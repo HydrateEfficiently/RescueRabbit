@@ -24,13 +24,17 @@ namespace RescueRabbit.Web.Controllers.Api
             _identityResolver = identityResolver;
         }
 
-        public async Task<IActionResult> CreateAsync([FromBody] CreateMotivationPiece model)
+        [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> Create([FromBody] CreateMotivationPiece model)
         {
             var result = await _motivationService.CreateAsync(model);
             return new ObjectResult(result);
         }
 
-        public async Task<IActionResult> ListAsync()
+        [HttpGet]
+        [Route("list")]
+        public async Task<IActionResult> List()
         {
             var result = await _motivationService.ListAsync(_identityResolver.GetId());
             return new ObjectResult(result);
