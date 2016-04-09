@@ -18,8 +18,7 @@ export class UrlService extends Injectable {
     getUrl(actionPath, params) {
         let config = this._getConfig(actionPath);
         let url = this.resolveUrl(config.urlPattern, params);
-        let method = config.method;
-        return { url, method };
+        return url;
     }
 
     getActions(controllerPath) {
@@ -53,12 +52,14 @@ export class UrlService extends Injectable {
             throw 'No actions were configured for this page.';
         }
 
-        let pathComponents = actionPath.split('.');
+        let pathComponents = path.split('.');
         for (let i = 0; i < pathComponents.length; i++) {
             config = config[pathComponents[i]];
             if (!config) {
                 throw `Could not find action with path ${pathComponents}`;
             }
         }
+
+        return config;
     }
 }

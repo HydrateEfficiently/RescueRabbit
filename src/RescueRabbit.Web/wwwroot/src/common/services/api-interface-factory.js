@@ -10,14 +10,16 @@ export class ApiInterfaceFactory extends Injectable {
     }
 
     createApiInterface(controllerName) {
+        debugger;
         let { RRUrlService, RRHttpService } = this;
 
         let controllerPath = `api.${controllerName}`;
-        let actions = this.RRUrlService.getActions(controllerPath);
+        let actions = RRUrlService.getActions(controllerPath);
 
         let apiInterface = {};
         for (let actionName in actions) {
             apiInterface[actionName] = (params) => {
+                debugger;
                 let url = this.RRUrlService.resolveUrl(action.urlPattern, params);
                 this.RRHttpService[action.method]();
             };

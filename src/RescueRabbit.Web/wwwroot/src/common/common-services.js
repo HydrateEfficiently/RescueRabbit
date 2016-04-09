@@ -3,6 +3,7 @@ import { HttpService } from './services/http-service';
 import { UrlService } from './services/url-service';
 import { SessionService } from './services/session-service';
 import { LoggingService } from './services/logging-service';
+import { ApiInterfaceFactory } from './services/api-interface-factory';
 
 import { GeolocationProvider } from './services/geolocation-provider';
 
@@ -13,6 +14,7 @@ let commonServices = angular.module('rr.common.services', [])
     .service('RRSessionService', SessionService)
     .service('RRLoggingService', LoggingService)
     .service('RRGeolocationProvider', GeolocationProvider)
+    .service('RRApiInterfaceFactory', ApiInterfaceFactory)
     .name;
 
 export { commonServices };
