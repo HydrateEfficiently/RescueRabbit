@@ -16,8 +16,8 @@ namespace RescueRabbit.Web.Utility
         private const string ControllerSuffix = "Controller";
         private const string ApiSuffix = "Api";
 
-        private static Dictionary<string, Dictionary<string, string>> __urlsByActionByController =
-            new Dictionary<string, Dictionary<string, string>>();
+        private static Dictionary<string, Dictionary<string, ExpandoObject>> __actionsByController =
+            new Dictionary<string, Dictionary<string, ExpandoObject>>();
 
         public static ExpandoObject EnumerateUrls(
             this IUrlHelper urlHelper,
@@ -37,12 +37,12 @@ namespace RescueRabbit.Web.Utility
                     controllerName.Substring(0, controllerName.Length - ApiSuffix.Length) :
                     controllerName;
 
-                Dictionary<string, string> actionUrlsByActionName;
+                Dictionary<string, ExpandoObject> actionsByActionName;
                 string controllerKey = isApiController ? $"{ApiSuffix}.{baseControllerName}" : baseControllerName;
-                if (!__urlsByActionByController.TryGetValue(controllerKey, out actionUrlsByActionName))
+                if (!__actionsByController.TryGetValue(controllerKey, out actionsByActionName))
                 {
-                    actionUrlsByActionName = GetActionUrlsByName(urlHelper, controller, controllerName);
-                    __urlsByActionByController.Add(controllerKey, actionUrlsByActionName);
+                    actionsByActionName = GetActionsByName(urlHelper, controller, controllerName);
+                    __actionsByController.Add(controllerKey, actionsByActionName);
                 }
 
                 dynamic container = result;
@@ -54,30 +54,34 @@ namespace RescueRabbit.Web.Utility
                         ExpandoObjectUtility.Add(result, ApiSuffix, container);
                     }
                 }
-                ExpandoObjectUtility.Add(container, baseControllerName, actionUrlsByActionName);
+                ExpandoObjectUtility.Add(container, baseControllerName, actionsByActionName);
             }
             return result;
         }
 
-        private static Dictionary<string, string> GetActionUrlsByName(
+        private static Dictionary<string, ExpandoObject> GetActionsByName(
             IUrlHelper urlHelper,
             Type controller,
             string controllerName)
         {
-            var result = new Dictionary<string, string>();
+            var result = new Dictionary<string, ExpandoObject>();
 
             var publicActions = ((TypeInfo)controller).DeclaredMethods.Where(mi =>
                 mi.IsPublic && !mi.IsDefined(typeof(UrlEnumerateIgnoreAttribute), false));
 
-            foreach (var action in publicActions)
+            foreach (var actionType in publicActions)
             {
-                string actionName = action.Name;
                 var routeValues = new RouteValueDictionary();
-                foreach (var parameter in action.GetParameters().Where(pi => !pi.IsDefined(typeof(FromBodyAttribute), false)))
+                foreach (var parameter in actionType.GetParameters().Where(pi => !pi.IsDefined(typeof(FromBodyAttribute), false)))
                 {
                     routeValues.Add(parameter.Name, $":{parameter.Name}");
                 }
-                result.Add(actionName, urlHelper.Action(actionName, controllerName, routeValues));
+
+                string actionName = actionType.Name;
+                dynamic action = new ExpandoObject();
+                action.UrlPattern = urlHelper.Action(actionName, controllerName, routeValues);
+                action.Method = actionType.IsDefined(typeof(HttpGetAttribute)) ? "get" : "post";
+                result.Add(actionName, action);
             }
 
             return result;
