@@ -18,10 +18,11 @@ export class ApiInterfaceFactory extends Injectable {
 
         let apiInterface = {};
         for (let actionName in actions) {
-            apiInterface[actionName] = (params) => {
+            let action = actions[actionName];
+            apiInterface[actionName] = (params, ...args) => {
                 debugger;
                 let url = this.RRUrlService.resolveUrl(action.urlPattern, params);
-                this.RRHttpService[action.method]();
+                return this.RRHttpService[action.method](url, ...args);
             };
         }
 
